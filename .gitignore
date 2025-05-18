@@ -1,6 +1,6 @@
-build
-venv
-dist
-.vscode
-__pycache__ 
 poetry.lock
+build/
+venv/
+dist/
+.vscode/
+**/__pycache__/ 
