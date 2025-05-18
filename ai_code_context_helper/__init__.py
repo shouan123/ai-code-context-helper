@@ -1,12 +1,6 @@
-import tkinter as tk
+"""AI代码上下文助手 - 一个帮助开发者与AI助手协作的工具"""
+
 from ai_code_context_helper.version import __version__
 from ai_code_context_helper.code_context_generator import CodeContextGenerator
 
-def main():
-    """应用程序入口点，创建主窗口并启动事件循环"""
-    root = tk.Tk()
-    app = CodeContextGenerator(root)
-    root.mainloop()
-
-if __name__ == "__main__":
-    main()
+__all__ = ['CodeContextGenerator', '__version__']

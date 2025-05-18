@@ -9,8 +9,10 @@
   "use_relative_path": true,
   "max_depth": 0,
   "file_filter": "",
-  "preserve_tree_state": true,
   "language": "en_US",
-  "dir_history": [
-  ]
+  "directory_history": [],
+  "show_advanced_options": false,
+  "enable_easy_multiselect": true,
+  "use_gitignore": true,
+  "is_topmost": false
 }
