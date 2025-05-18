@@ -2,17 +2,37 @@
 
 ## 📝 Introduction
 
-AI Code Context Helper is a lightweight desktop application designed for anyone who needs to understand, learn, or develop code. Whether you're a programming beginner, professional developer, or educator, it helps you easily extract code context and communicate efficiently with AI assistants. Through visual project structure display and one-click code export, it makes understanding complex code, getting AI programming suggestions, and conducting code reviews unprecedentedly simple. This powerful yet simple tool accelerates the learning curve for beginners while improving productivity for professional developers, whether you're learning code, developing new features, or seeking code improvement suggestions.
+AI Code Context Helper is a lightweight desktop application designed for anyone who needs to understand, learn, or develop code. Whether you're a programming beginner, professional developer, or educator, it helps you easily extract code context and communicate efficiently with AI assistants. Through visual project structure displays and one-click code export, it makes understanding complex code, getting AI programming suggestions, and conducting code reviews unprecedentedly simple. This powerful yet simple tool accelerates the learning curve for beginners while improving productivity for professional developers, regardless of whether you're learning code, developing new features, or seeking improvement suggestions.
 
 <p align="center">
   <img src="./_images/app.gif" width="50%" alt="Animation">
 </p>
 
+## 👥 Target Users
+
+- **Programming Beginners**: Understand open-source project structures and code logic through AI, accelerating your learning curve
+- **Software Developers**: Seamlessly integrate AI programming assistants into existing workflows to improve development efficiency
+- **Code Reviewers**: Quickly extract project module code and leverage AI for quality reviews and optimization suggestions
+- **Technical Educators**: Explain code structures and implementation details more effectively as teaching aids
+- **Open Source Contributors**: Rapidly familiarize yourself with new project codebases, lowering barriers to contribution
+
+## 🎯 Key Application Scenarios
+
+This tool allows you to easily pass code context to AI assistants for:
+
+- **Code Learning**: Understanding complex project structures and mechanisms, improving learning efficiency
+- **Development Assistance**: Getting more accurate code modification and feature implementation suggestions
+- **Code Reviews**: Conducting automated quality checks and performance optimization analysis
+- **Refactoring Guidance**: Receiving code improvement suggestions based on complete context
+- **Problem Diagnosis**: Helping AI precisely locate issues by providing the complete environment
+
+All features run locally without internet connection, ensuring the privacy and security of your code.
+
 ## 💡 Core Use Cases
 
 ### 1. Code Learning & Analysis
 
-Let AI help you understand how complex codebases work:
+Easily let AI help you understand how complex codebases work:
 
 1. **Select Target Project Directory**: Open the project you want to analyze
 2. **Copy Complete Project Structure**: Use the "Copy Directory Tree" function to help AI understand the overall architecture
@@ -36,7 +56,7 @@ Get AI programming assistance without disrupting your existing workflow:
 
 Let AI become your code review assistant:
 
-1. **Select Module for Review**: Use box selection for all files in a functional module
+1. **Select Module for Review**: Box-select all files in a functional module
 2. **Copy All Related Code with One Click**: Include complete implementation details and file paths
 3. **Request AI Review**: Get feedback on code quality, potential issues, and improvement suggestions
 4. **Implement Refactoring Suggestions**: Apply optimization solutions provided by AI
