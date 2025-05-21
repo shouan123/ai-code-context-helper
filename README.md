@@ -1,162 +1,162 @@
-<p align="center"><a href="README_en.md">English</a> | 中文<p>
+<p align="center">English | <a href="README_zh.md">中文</a><p>
 
-## 📝 简介
+## 📝 Introduction
 
-AI Code Context Helper 是一款轻量级桌面应用，为所有需要理解、学习和开发代码的人设计。无论您是编程初学者、职业开发者还是教育工作者，它都能帮助您轻松提取代码上下文，与 AI 助手高效交流。通过可视化的项目结构展示和一键代码导出功能，它让理解复杂代码、获取 AI 编程建议和进行代码审查变得前所未有的简单。无论您是在学习理解代码、开发新功能，还是寻求代码改进建议。这个简单而强大的工具帮助初学者加速学习曲线，同时为专业开发者提高工作效率。
-
-<p align="center">
-  <img src="./_images/app.gif" width="50%" alt="动图">
-</p>
-
-## 👥 适用人群
-
-- **编程初学者**: 通过 AI 理解开源项目结构和代码逻辑，加速学习曲线
-- **软件开发人员**: 在现有工作流中无缝集成 AI 编程助手，提高开发效率
-- **代码审查者**: 快速提取项目模块代码，利用 AI 进行质量审查和优化建议
-- **技术教育者**: 更有效地解释代码结构和实现细节，辅助教学过程
-- **开源贡献者**: 快速熟悉新项目代码库，降低贡献门槛
-
-## 🎯 主要应用场景
-
-本工具让您可以轻松将代码内容传递给 AI 助手，实现以下场景：
-
-- **代码学习**: 理解复杂项目结构和工作原理，提高学习效率
-- **开发辅助**: 获取更准确的代码修改和功能实现建议
-- **代码审查**: 进行自动化质量检查和性能优化分析
-- **重构指导**: 基于完整上下文的代码改进建议
-- **问题诊断**: 通过提供完整环境帮助 AI 更准确地定位问题
-
-所有功能都在本地运行，不需要联网，确保您的代码隐私安全。
-
-## 💡 核心使用场景
-
-### 1. 代码学习与分析
-
-轻松让 AI 帮你理解复杂代码库的工作原理：
-
-1. **选择目标项目目录**：打开你想分析的项目
-2. **复制完整项目结构**：使用"复制目录树"功能，让 AI 先了解整体架构
-3. **提供核心代码文件**：选择关键文件，使用"复制路径与代码"一次性提供所有代码
-4. **询问 AI 分析**：请求 AI 分析代码结构、解释工作原理或提供学习路径
-
-> 以往理解一个复杂开源项目可能需要数天，现在可以先让 AI 提供整体概览和关键部分解析，大幅提升学习效率！
-
-### 2. 代码修改与开发
-
-快速获取 AI 编程辅助而不破坏现有工作流：
-
-1. **定位需要修改的模块**：通过可视化树形结构找到相关文件
-2. **导出相关代码上下文**：同时选择相关的多个文件（如模型、控制器和视图）
-3. **描述修改需求**：向 AI 清晰描述你想实现的功能或修复的问题
-4. **获取完整实现方案**：AI 会基于完整上下文提供准确的代码修改建议
-
-> 相比单文件编辑器集成，这种方式能提供更完整的项目上下文，产生更准确、更具可操作性的代码建议
-
-### 3. 代码审查与重构
-
-让 AI 成为你的代码审查助手：
-
-1. **选择待审查模块**：框选整个功能模块的所有文件
-2. **一键复制所有相关代码**：包含完整的实现细节和文件路径
-3. **请求 AI 审查**：获取关于代码质量、潜在问题和改进建议的反馈
-4. **实施重构建议**：应用 AI 提供的优化方案
-
-> 如果代码总量在 5000 行以内，可以一次性复制给主流 AI 助手进行全面分析，比传统代码审查更快、更全面
-
-### 本地运行，保障隐私
-
-- **完全离线工作**：软件在本地运行，不需要联网，不会上传任何代码
-- **隐私保护**：您的代码仅在您主动复制时才会离开您的电脑
-- **与任何 AI 助手兼容**：您可以自由选择使用哪种 AI 服务，完全由您控制代码分享范围
+AI Code Context Helper is a lightweight desktop application designed for anyone who needs to understand, learn, or develop code. Whether you're a programming beginner, professional developer, or educator, it helps you easily extract code context and communicate efficiently with AI assistants. Through visual project structure displays and one-click code export, it makes understanding complex code, getting AI programming suggestions, and conducting code reviews unprecedentedly simple. This powerful yet simple tool accelerates the learning curve for beginners while improving productivity for professional developers, regardless of whether you're learning code, developing new features, or seeking improvement suggestions.
 
 <p align="center">
-  <img src="./_images/app_overview.png" width="50%" alt="应用概览截图">
+  <img src="./_images/app_overview.png" width="50%" alt="Application overview screenshot">
 </p>
-
-## ✨ 主要特性
-
-### 智能文件管理
-
-- **目录树可视化**：树形视图显示项目文件结构
-- **文件类型识别**：自动检测文本文件编码，区分文本与二进制文件
-- **高级筛选**：支持正则表达式过滤、.gitignore 规则应用和目录深度限制，便于处理大型项目
-
-### 灵活选择与导出
-
-- **多选支持**：可选择单个文件、多个文件或整个目录及其子目录
-- **鼠标框选模式**：通过拖动鼠标一次性选择/取消选择多个文件
-- **批量导出**：支持导出选中内容的路径、代码或两者兼有
-- **上下文菜单**：提供多种复制选项，适用于不同开发场景
-
-### 集成与便捷性
-
-- **系统托盘集成**：最小化到系统托盘，随时可用但不占用桌面空间
-- **全局热键**：在任何应用中按下 Ctrl+2 快捷键即可显示/隐藏应用窗口
-- **窗口置顶选项**：使窗口保持在其他应用之上，便于操作
-- **文件系统集成**：直接从上下文菜单在资源管理器中打开文件夹或启动命令行终端
-
-### 定制化与易用性
-
-- **多语言支持**：支持中英文切换
-- **输出格式定制**：可配置代码和路径的前缀后缀格式
-- **高级选项切换**：可隐藏/显示高级设置，最大化目录树显示空间
-- **轻量实现**：低资源占用，启动迅速，无缝融入现有开发工作流
-
-## 🔑 快捷键与特殊功能
-
-- **Ctrl+C**：复制选中文件的路径和代码
-- **Ctrl+B**：复制选中文件的文件名
-- **Ctrl+F**：在资源管理器中打开选中文件夹
-- **Ctrl+T**：在选中文件夹中打开命令行终端
-- **Ctrl+2**：全局热键，从任何地方显示/隐藏应用程序
-- **树状态保持**：应用程序会在会话之间记住每个项目目录的展开状态
-
-## 📸 应用截图
-
-### 目录树菜单
 
 <p align="center">
-  <img src="./_images/context_menu.png" width="60%" alt="右键菜单">
+  <img src="./_images/app.gif" width="50%" alt="Animation">
 </p>
 
-## 🔧 安装与使用
+## 👥 Target Users
 
-### 下载安装
+- **Programming Beginners**: Understand open-source project structures and code logic through AI, accelerating your learning curve
+- **Software Developers**: Seamlessly integrate AI programming assistants into existing workflows to improve development efficiency
+- **Code Reviewers**: Quickly extract project module code and leverage AI for quality reviews and optimization suggestions
+- **Technical Educators**: Explain code structures and implementation details more effectively as teaching aids
+- **Open Source Contributors**: Rapidly familiarize yourself with new project codebases, lowering barriers to contribution
 
-1. 从[Releases 页面](https://github.com/sansan0/ai-code-context-helper/releases)下载最新版本
-2. 解压缩下载的文件到任意位置
-3. 运行`AI Code Context Helper.exe`启动应用
+## 🎯 Key Application Scenarios
 
-### 使用方法
+This tool allows you to easily pass code context to AI assistants for:
 
-1. 点击"浏览..."按钮选择项目根目录
-2. 在目录树中勾选需要分享的文件或文件夹
-3. 右键点击选择"复制路径与代码"（或使用其他复制选项）
-4. 将复制的内容粘贴到 AI 助手（如 ChatGPT、Claude 等）对话中
-5. 根据复制的代码上下文，向 AI 提问或请求代码修改建议
+- **Code Learning**: Understanding complex project structures and mechanisms, improving learning efficiency
+- **Development Assistance**: Getting more accurate code modification and feature implementation suggestions
+- **Code Reviews**: Conducting automated quality checks and performance optimization analysis
+- **Refactoring Guidance**: Receiving code improvement suggestions based on complete context
+- **Problem Diagnosis**: Helping AI precisely locate issues by providing the complete environment
 
-## ⚙️ 配置选项
+All features run locally without internet connection, ensuring the privacy and security of your code.
 
-### 界面选项
+## 💡 Core Use Cases
 
-- **显示隐藏文件**：是否显示隐藏文件和文件夹
-- **显示文件/显示文件夹**：控制树视图中的显示内容
-- **使用相对路径**：复制时使用相对路径而非绝对路径
-- **根据.gitignore 过滤**：应用项目.gitignore 文件中的规则
-- **鼠标框选模式**：启用拖动选择功能，方便批量操作
-- **最大深度**：限制目录树的显示深度
-- **文件过滤**：使用正则表达式过滤显示的文件
-- **窗口置顶**：使窗口保持在所有其他应用之上
-- **高级选项切换**：隐藏/显示高级设置，最大化树显示空间
+### 1. Code Learning & Analysis
 
-## 🛠️ 从源码构建
+Easily let AI help you understand how complex codebases work:
 
-### 环境要求
+1. **Select Target Project Directory**: Open the project you want to analyze
+2. **Copy Complete Project Structure**: Use the "Copy Directory Tree" function to help AI understand the overall architecture
+3. **Provide Core Code Files**: Select key files and use "Copy Path and Code" to provide all code at once
+4. **Ask AI for Analysis**: Request AI to analyze code structure, explain how it works, or suggest a learning path
+
+> Understanding a complex open-source project used to take days. Now you can get an overview and analysis of key parts from AI, greatly improving learning efficiency!
+
+### 2. Code Modification & Development
+
+Get AI programming assistance without disrupting your existing workflow:
+
+1. **Locate Modules Needing Changes**: Find relevant files through the visual tree structure
+2. **Export Related Code Context**: Select multiple related files simultaneously (e.g., models, controllers, and views)
+3. **Describe Modification Requirements**: Clearly explain to AI what functionality you want to implement or what problem needs fixing
+4. **Get Complete Implementation Plan**: AI will provide accurate code modification suggestions based on the complete context
+
+> Compared to single-file editor integrations, this approach provides more complete project context, resulting in more accurate and actionable code suggestions
+
+### 3. Code Review & Refactoring
+
+Let AI become your code review assistant:
+
+1. **Select Module for Review**: Box-select all files in a functional module
+2. **Copy All Related Code with One Click**: Include complete implementation details and file paths
+3. **Request AI Review**: Get feedback on code quality, potential issues, and improvement suggestions
+4. **Implement Refactoring Suggestions**: Apply optimization solutions provided by AI
+
+> If the total code is under 5,000 lines, you can copy it all to mainstream AI assistants for comprehensive analysis, faster and more thorough than traditional code reviews
+
+### Local Execution, Privacy Protection
+
+- **Completely Offline Operation**: The software runs locally, requires no internet connection, and never uploads any code
+- **Privacy Protection**: Your code only leaves your computer when you actively copy it
+- **Compatible with Any AI Assistant**: You're free to choose which AI service to use, with complete control over code sharing
+
+## ✨ Key Features
+
+### Intelligent File Management
+
+- **Directory Tree Visualization**: Tree view displays project file structure
+- **File Type Recognition**: Automatically detects text file encoding, distinguishes between text and binary files
+- **Advanced Filtering**: Supports regular expression filtering, .gitignore rule application, and directory depth limits for handling large projects
+
+### Flexible Selection & Export
+
+- **Multi-selection Support**: Select single files, multiple files, or entire directories and their subdirectories
+- **Mouse Box Selection Mode**: Select/deselect multiple files at once by dragging the mouse
+- **Batch Export**: Export paths, code, or both for selected content
+- **Context Menu**: Provides multiple copy options for different development scenarios
+
+### Integration & Convenience
+
+- **System Tray Integration**: Minimize to system tray, available anytime without occupying desktop space
+- **Global Hotkey**: Press Ctrl+2 from any application to show/hide the application window
+- **Window Always-on-Top Option**: Keep the window above other applications for convenience
+- **File System Integration**: Open folders in file explorer or launch command-line terminals directly from the context menu
+
+### Customization & Ease of Use
+
+- **Multi-language Support**: Switch between English and Chinese
+- **Output Format Customization**: Configure prefixes and suffixes for code and paths
+- **Advanced Options Toggle**: Hide/show advanced settings to maximize directory tree display space
+- **Lightweight Implementation**: Low resource usage, quick startup, seamlessly integrates into existing development workflows
+
+## 🔑 Shortcuts & Special Functions
+
+- **Ctrl+C**: Copy paths and code of selected files
+- **Ctrl+B**: Copy filenames of selected files
+- **Ctrl+F**: Open selected folder in file explorer
+- **Ctrl+T**: Open command-line terminal in selected folder
+- **Ctrl+2**: Global hotkey to show/hide the application from anywhere
+- **Tree State Preservation**: The application remembers expansion state of each project directory between sessions
+
+## 📸 Application Screenshots
+
+### Directory Tree Menu
+
+<p align="center">
+  <img src="./_images/context_menu.png" width="60%" alt="Right-click menu">
+</p>
+
+## 🔧 Installation & Usage
+
+### Download & Install
+
+1. Download the latest version from the [Releases page](https://github.com/sansan0/ai-code-context-helper/releases)
+2. Extract the downloaded file to any location
+3. Run `AI Code Context Helper.exe` to launch the application
+
+### How to Use
+
+1. Click "Browse..." to select your project root directory
+2. Check the files or folders you want to share in the directory tree
+3. Right-click and select "Copy Path and Code" (or other copy options)
+4. Paste the copied content into an AI assistant (like ChatGPT, Claude, etc.)
+5. Ask questions or request code modification suggestions based on the provided code context
+
+## ⚙️ Configuration Options
+
+### Interface Options
+
+- **Show Hidden Files**: Whether to display hidden files and folders
+- **Show Files/Show Folders**: Control what appears in the tree view
+- **Use Relative Path**: Use paths relative to the root directory instead of absolute paths
+- **Filter by .gitignore**: Apply rules from the project's .gitignore file
+- **Mouse Box Selection Mode**: Enable drag selection for batch operations
+- **Maximum Depth**: Limit the display depth of the directory tree
+- **File Filter**: Filter displayed files using regular expressions
+- **Keep on Top**: Keep the window above all other applications
+- **Advanced Options Toggle**: Hide/show advanced settings to maximize tree display space
+
+## 🛠️ Building from Source
+
+### Requirements
 
 - Python 3.9+
-- Poetry 包管理工具
+- Poetry package manager
 
-### 安装依赖
+### Installing Dependencies
 
 ```bash
 git clone https://github.com/sansan0/ai-code-context-helper.git
@@ -164,12 +164,12 @@ cd ai-code-context-helper
 poetry install
 ```
 
-### 构建可执行文件
+### Building the Executable
 
 ```bash
 poetry run python -m cx_Freeze build
 ```
 
-## 📄 许可证
+## 📄 License
 
-本项目采用 GPL-3.0 许可证 - 详见 [LICENSE](LICENSE) 文件
+This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details
