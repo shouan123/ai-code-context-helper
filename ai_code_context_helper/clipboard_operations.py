@@ -34,7 +34,13 @@ class ClipboardOperations:
         if text:
             self.parent.root.clipboard_clear()
             self.parent.root.clipboard_append(text)
-            self.parent.status_var.set(self.parent.texts["status_copied_to_clipboard"])
+        
+            # 计算总行数
+            total_lines = text.count("\n") + 1
+        
+            self.parent.status_var.set(
+                f"{self.parent.texts['status_copied_to_clipboard']} | 共 {total_lines} 行"
+            )
         else:
             self.parent.status_var.set(self.parent.texts["status_no_selection"])
 
@@ -99,8 +105,15 @@ class ClipboardOperations:
             combined = "\n".join(results)
             self.parent.root.clipboard_clear()
             self.parent.root.clipboard_append(combined)
+        
+            # 计算总行数
+            total_lines = combined.count("\n") + 1
+        
+            # 使用带行数的状态消息
             self.parent.status_var.set(
-                self.parent.texts["status_paths_copied"].format(count)
+                self.parent.texts.get("status_paths_copied_with_lines", "已复制 {0} 个路径 | 共 {1} 行").format(
+                    count, total_lines
+                )
             )
         else:
             self.parent.status_var.set(self.parent.texts["status_no_paths"])
@@ -121,8 +134,15 @@ class ClipboardOperations:
             combined = "\n\n".join(results)
             self.parent.root.clipboard_clear()
             self.parent.root.clipboard_append(combined)
+        
+            # 计算总行数
+            total_lines = combined.count("\n") + 1
+        
+            # 使用带行数的状态消息
             self.parent.status_var.set(
-                self.parent.texts["status_code_copied"].format(count)
+                self.parent.texts.get("status_code_copied_with_lines", "已复制 {0} 个文件的代码 | 共 {1} 行").format(
+                    count, total_lines
+                )
             )
         else:
             self.parent.status_var.set(self.parent.texts["status_no_text_files"])
@@ -145,8 +165,15 @@ class ClipboardOperations:
             combined = "".join(results)
             self.parent.root.clipboard_clear()
             self.parent.root.clipboard_append(combined)
+        
+            # 计算总行数
+            total_lines = combined.count("\n") + 1
+        
+            # 使用带行数的状态消息
             self.parent.status_var.set(
-                self.parent.texts["status_path_code_copied"].format(count)
+                self.parent.texts.get("status_path_code_copied_with_lines", "已复制 {0} 个文件的路径和代码 | 共 {1} 行").format(
+                    count, total_lines
+                )
             )
         else:
             self.parent.status_var.set(self.parent.texts["status_no_text_files"])
@@ -178,8 +205,15 @@ class ClipboardOperations:
             combined = "\n".join(filenames)
             self.parent.root.clipboard_clear()
             self.parent.root.clipboard_append(combined)
+        
+            # 计算总行数
+            total_lines = combined.count("\n") + 1
+        
+            # 使用带行数的状态消息
             self.parent.status_var.set(
-                self.parent.texts["status_filenames_copied"].format(len(filenames))
+                self.parent.texts.get("status_filenames_copied_with_lines", "已复制 {0} 个文件名 | 共 {1} 行").format(
+                    len(filenames), total_lines
+                )
             )
         else:
             self.parent.status_var.set(self.parent.texts["status_no_selection"])

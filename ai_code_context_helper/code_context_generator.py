@@ -25,7 +25,6 @@ from ai_code_context_helper.settings_manager import SettingsManager
 from ai_code_context_helper.languages import LANGUAGES
 from ai_code_context_helper import __version__
 
-# 导入新的模块
 from ai_code_context_helper.gui_components import GUIComponents
 from ai_code_context_helper.tree_operations import TreeOperations
 from ai_code_context_helper.clipboard_operations import ClipboardOperations
@@ -143,8 +142,31 @@ class CodeContextGenerator:
 
         # 注册全局快捷键Ctrl+2
         self._register_global_hotkey()
-        
-    
+
+        self._setup_auto_save()
+
+    def _setup_auto_save(self):
+        """设置自动保存机制 - 每30秒保存所有设置"""
+        self._auto_save_interval = 30000  # 30秒
+        self._schedule_auto_save()
+
+    def _schedule_auto_save(self):
+        """安排下一次自动保存"""
+        if hasattr(self, "root") and self.root.winfo_exists():
+            self.root.after(self._auto_save_interval, self._auto_save_task)
+
+    def _auto_save_task(self):
+        """执行自动保存任务"""
+        try:
+            if self.settings.settings_changed:
+                print("执行自动保存...")
+                self.settings.save_settings()
+        except Exception as e:
+            print(f"自动保存出错: {str(e)}")
+        finally:
+            self._schedule_auto_save()
+
+
     def _setup_initial_directory(self):
         """设置初始目录并安排加载"""
         if self.dir_history and len(self.dir_history) > 0:
@@ -156,7 +178,7 @@ class CodeContextGenerator:
                     # 延迟生成树，确保界面初始化完成
                     self.root.after(300, self._initial_tree_load)
                     return
-            
+
             # 如果所有历史目录都无效
             print("所有历史目录都无效，清空历史")
             self.dir_history = []
@@ -295,13 +317,13 @@ class CodeContextGenerator:
     def _initial_tree_load(self):
         """初始化时加载目录树并应用保存的展开状态，不保存当前状态"""
         directory = self.dir_path.get().strip()
-        
+
         # 检查目录是否有效
         if not directory or not Path(directory).is_dir():
             print("初始化加载: 目录无效或为空")
             self._initial_loading = False  # 标记初始化完成，即使失败了
             return False
-            
+
         print(f"===== 初始化加载目录: {directory} =====")
         # 设置当前加载的目录
         self._current_loaded_directory = directory
@@ -398,6 +420,9 @@ class CodeContextGenerator:
         print("===== 更新目录树 =====")
         directory = self.dir_path.get().strip()
         if directory and Path(directory).is_dir():
+            # 更新目录树时强制刷新 .gitignore 缓存
+            from ai_code_context_helper.file_utils import clear_gitignore_cache
+            clear_gitignore_cache()
             # 先保存当前的滚动位置
             try:
                 # 获取当前可见区域的开始和结束位置
@@ -501,22 +526,17 @@ class CodeContextGenerator:
             self.status_var.set(self.texts["status_tree_updated"])
 
     def _save_expanded_state(self):
-        """保存当前目录树的展开状态"""
+        """立即保存展开状态"""
         current_dir = self.dir_path.get().strip()
         if not current_dir or not Path(current_dir).is_dir():
             return
 
-        # 标准化路径
         current_dir = normalize_path(current_dir)
         expanded_items = []
 
-        # 收集所有已展开的目录
         def collect_expanded_items(parent=""):
             for item_id in self.tree.get_children(parent):
-                # 检查是否为目录并且是展开状态
                 is_open = self.tree.item(item_id, "open")
-
-                # 获取路径
                 item_path = None
                 for path, tree_id in self.tree_items.items():
                     if tree_id == item_id:
@@ -525,32 +545,28 @@ class CodeContextGenerator:
 
                 if item_path and is_open and Path(item_path).is_dir():
                     try:
-                        # 计算相对路径
                         rel_path = str(Path(item_path).relative_to(Path(current_dir)))
                         if rel_path == ".":
                             expanded_items.append(".")
                         else:
                             expanded_items.append(rel_path)
-                        # 只有展开的节点才需要递归处理子项
                         collect_expanded_items(item_id)
                     except (ValueError, TypeError):
                         pass
 
-        # 从根节点开始收集
         collect_expanded_items()
-
-        # 确保至少包含根目录
+    
         if "." not in expanded_items:
             expanded_items.append(".")
 
-        # 用新的展开状态更新设置
-        print(f"保存目录 '{current_dir}' 的展开状态: {expanded_items}")
         self.settings.expanded_states[current_dir] = expanded_items
         self.settings.settings_changed = True
+    
+        # 立即保存关键状态
+        self.settings.save_settings()
 
     def change_language(self, *args):
         """更改界面语言"""
-        # 保留这个方法，因为它是核心功能
         selected_display_name = self.language_var.get()
         selected_language = self.language_names.get(selected_display_name)
 
@@ -562,13 +578,11 @@ class CodeContextGenerator:
             self.settings.settings_changed = True
             self.gui.update_ui_texts()
 
-            # 重新创建系统托盘图标以更新菜单文本
             print("语言已更改，正在更新系统托盘菜单...")
             self._create_system_tray()
 
     def on_setting_option_changed(self, *args):
         """当设置选项改变时的处理函数"""
-        # 保留这个方法，因为它是核心功能
         self.settings.show_hidden_value = self.show_hidden.get()
         self.settings.show_files_value = self.show_files.get()
         self.settings.show_folders_value = self.show_folders.get()
@@ -581,10 +595,11 @@ class CodeContextGenerator:
 
         directory = self.dir_path.get().strip()
         if directory and Path(directory).is_dir():
+            # 如果是gitignore相关设置变更，强制刷新缓存
             if args and self.settings.settings_changed:
                 from ai_code_context_helper.file_utils import clear_gitignore_cache
-
                 clear_gitignore_cache()
+        
             self.tree_ops.generate_tree(preserve_state=True)
 
     def on_dir_changed(self, *args):
@@ -631,7 +646,6 @@ class CodeContextGenerator:
         # 如果是不同的目录，保存旧目录状态
         if current_dir and current_dir != new_directory and Path(current_dir).is_dir():
             print(f"保存旧目录 {current_dir} 的状态")
-            backup_dir = self.dir_path.get()
             # 临时将路径设置为旧目录以正确保存状态
             self.dir_path.set(current_dir)
             self._save_expanded_state()
@@ -767,7 +781,7 @@ class CodeContextGenerator:
         # 清空目录地址栏
         self.dir_path.set("")
         self._current_loaded_directory = None
-        
+
         # 重置初始化标记，以便能够重新加载新目录
         self._initial_loading = False
 
@@ -858,15 +872,7 @@ class CodeContextGenerator:
             except Exception as e:
                 print(f"停止现有托盘图标时出错: {e}")
 
-        # 创建一个用于系统托盘的图标
-        icon_path = None
-        try:
-            icon_path = Path(__file__).parent / RESOURCES_DIR / ICON_FILENAME
-        except Exception as e:
-            print(f"无法加载图标: {str(e)}")
-            # 如果找不到图标，创建一个简单的图标
-            icon = self._create_default_icon()
-
+        icon_path = Path(__file__).parent / RESOURCES_DIR / ICON_FILENAME
         if icon_path and icon_path.exists():
             try:
                 # 使用现有图标
@@ -921,7 +927,6 @@ class CodeContextGenerator:
         image = Image.new("RGBA", (size, size), color=(0, 0, 0, 0))
         dc = ImageDraw.Draw(image)
 
-        # 画一个简单的图标
         dc.rectangle(
             [(8, 8), (size - 8, size - 8)],
             fill=(45, 156, 219),

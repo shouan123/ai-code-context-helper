@@ -146,7 +146,7 @@ class TreeOperations:
 
         # 定义一个变量控制是否使用保存的展开状态
         use_saved_expansion = False
-        use_old_state = False  # 新增：标记是否使用旧的勾选状态
+        use_old_state = False
 
         # 根据preserve_state决定是否使用保存的展开状态
         if preserve_state and directory in self.parent.settings.expanded_states:
@@ -512,6 +512,10 @@ class TreeOperations:
 
     def _populate_tree(self, directory_path, parent_id, level):
         """递归填充目录树视图"""
+        # 导入需要的模块和配置
+        from ai_code_context_helper.file_utils import get_file_stats, is_ignored_by_gitignore
+        from ai_code_context_helper.config import CHECK_MARK
+    
         max_depth = self.parent.max_depth.get()
         if max_depth > 0 and level >= max_depth:
             return
@@ -523,7 +527,7 @@ class TreeOperations:
                 parent_id,
                 "end",
                 text=self.parent.texts["error_permission_denied"],
-                values=("",),
+                values=("", "", ""),
             )
             self.parent.tree.item(error_id, tags=("gray",))
             return
@@ -532,7 +536,7 @@ class TreeOperations:
                 parent_id,
                 "end",
                 text=self.parent.texts["error_msg"].format(str(e)),
-                values=("",),
+                values=("", "", ""),
             )
             self.parent.tree.item(error_id, tags=("gray",))
             return
@@ -551,12 +555,9 @@ class TreeOperations:
 
         # 应用.gitignore过滤
         if self.parent.use_gitignore.get():
-            from ai_code_context_helper.file_utils import is_ignored_by_gitignore
-            
             # 查找项目根目录
-            # 假设dir_path设置的目录是项目根目录
             project_root = normalize_path(self.parent.dir_path.get().strip())
-            
+        
             # 筛选条目
             filtered_entries = []
             for e in entries:
@@ -564,6 +565,7 @@ class TreeOperations:
                     filtered_entries.append(e)
             entries = filtered_entries
 
+        # 应用文件过滤器
         filter_pattern = self.parent.file_filter.get().strip()
         if filter_pattern:
             try:
@@ -572,6 +574,7 @@ class TreeOperations:
             except re.error:
                 pass
 
+        # 分离目录和文件
         dirs = []
         files = []
 
@@ -582,13 +585,19 @@ class TreeOperations:
             elif self.parent.show_files.get():
                 files.append(entry)
 
+        # 处理目录
         for d in dirs:
             item_id = self.parent.tree.insert(
-                parent_id, "end", text=d.name, values=("✓",), open=False
+                parent_id, 
+                "end", 
+                text=d.name, 
+                values=(CHECK_MARK, "", ""),  # 目录不显示行数和大小
+                open=False
             )
             self.parent.tree_items[str(d)] = item_id
             self.parent.checked_items.add(item_id)
 
+            # 检查目录是否有内容
             has_contents = False
             try:
                 next(d.iterdir(), None)
@@ -596,12 +605,21 @@ class TreeOperations:
             except (PermissionError, OSError, StopIteration):
                 pass
 
+            # 如果有内容，添加一个dummy节点用于延迟加载
             if has_contents:
                 self.parent.tree.insert(item_id, "end", text="", tags=("dummy",))
 
+        # 处理文件
         for f in files:
+            # 获取文件统计信息（行数和大小）
+            lines, _, size_str = get_file_stats(str(f))
+        
+            # 插入文件节点，包含行数和大小信息
             item_id = self.parent.tree.insert(
-                parent_id, "end", text=f.name, values=("✓",)
+                parent_id, 
+                "end", 
+                text=f.name,  # 只显示文件名
+                values=(CHECK_MARK, str(lines) if lines > 0 else "", size_str)  # 在单独的列中显示行数和大小
             )
             self.parent.tree_items[str(f)] = item_id
             self.parent.checked_items.add(item_id)
@@ -616,6 +634,10 @@ class TreeOperations:
         old_open_items,
     ):
         """带状态保留的目录树填充函数"""
+        # 导入需要的模块和配置
+        from ai_code_context_helper.file_utils import get_file_stats, is_ignored_by_gitignore
+        from ai_code_context_helper.config import CHECK_MARK
+    
         max_depth = self.parent.max_depth.get()
         if max_depth > 0 and level >= max_depth:
             return
@@ -627,7 +649,7 @@ class TreeOperations:
                 parent_id,
                 "end",
                 text=self.parent.texts["error_permission_denied"],
-                values=("",),
+                values=("", "", ""),
             )
             self.parent.tree.item(error_id, tags=("gray",))
             return
@@ -636,7 +658,7 @@ class TreeOperations:
                 parent_id,
                 "end",
                 text=self.parent.texts["error_msg"].format(str(e)),
-                values=("",),
+                values=("", "", ""),
             )
             self.parent.tree.item(error_id, tags=("gray",))
             return
@@ -655,12 +677,9 @@ class TreeOperations:
 
         # 应用.gitignore过滤
         if self.parent.use_gitignore.get():
-            from ai_code_context_helper.file_utils import is_ignored_by_gitignore
-            
             # 查找项目根目录
-            # 假设dir_path设置的目录是项目根目录
             project_root = normalize_path(self.parent.dir_path.get().strip())
-            
+        
             # 筛选条目
             filtered_entries = []
             for e in entries:
@@ -668,6 +687,7 @@ class TreeOperations:
                     filtered_entries.append(e)
             entries = filtered_entries
 
+        # 应用文件过滤器
         filter_pattern = self.parent.file_filter.get().strip()
         if filter_pattern:
             try:
@@ -676,6 +696,7 @@ class TreeOperations:
             except re.error:
                 pass
 
+        # 分离目录和文件
         dirs = []
         files = []
 
@@ -686,9 +707,11 @@ class TreeOperations:
             elif self.parent.show_files.get():
                 files.append(entry)
 
+        # 处理目录
         for d in dirs:
             path_str = str(d)
 
+            # 查找旧状态
             old_id = None
             checked = True  # 默认值为 True
             is_open = False
@@ -715,11 +738,12 @@ class TreeOperations:
                 f"目录: {d.name}, 找到旧ID: {old_id is not None}, 勾选状态: {checked}"
             )
 
+            # 插入目录节点
             item_id = self.parent.tree.insert(
                 parent_id,
                 "end",
                 text=d.name,
-                values=("✓" if checked else ""),
+                values=(CHECK_MARK if checked else "", "", ""),  # 目录不显示行数和大小
                 open=is_open,
             )
 
@@ -730,6 +754,7 @@ class TreeOperations:
             else:
                 self.parent.tree.item(item_id, tags=("gray",))
 
+            # 检查目录是否有内容
             has_contents = False
             try:
                 next(d.iterdir(), None)
@@ -737,8 +762,10 @@ class TreeOperations:
             except (PermissionError, OSError, StopIteration):
                 pass
 
+            # 处理子内容
             if has_contents:
                 if is_open:
+                    # 如果节点已展开，递归加载子内容
                     self._populate_tree_with_state(
                         d,
                         item_id,
@@ -748,11 +775,14 @@ class TreeOperations:
                         old_open_items,
                     )
                 else:
+                    # 如果节点关闭，添加dummy节点用于延迟加载
                     self.parent.tree.insert(item_id, "end", text="", tags=("dummy",))
 
+        # 处理文件
         for f in files:
             path_str = str(f)
 
+            # 查找旧状态
             old_id = None
             checked = True  # 默认值为 True
 
@@ -775,9 +805,16 @@ class TreeOperations:
             print(
                 f"文件: {f.name}, 找到旧ID: {old_id is not None}, 勾选状态: {checked}"
             )
-
+        
+            # 获取文件统计信息（行数和大小）
+            lines, _, size_str = get_file_stats(str(f))
+        
+            # 插入文件节点，包含行数和大小信息
             item_id = self.parent.tree.insert(
-                parent_id, "end", text=f.name, values=("✓" if checked else "")
+                parent_id, 
+                "end", 
+                text=f.name,  # 只显示文件名
+                values=(CHECK_MARK if checked else "", str(lines) if lines > 0 else "", size_str)  # 在单独的列中显示行数和大小
             )
 
             self.parent.tree_items[path_str] = item_id

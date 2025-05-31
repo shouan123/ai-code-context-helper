@@ -157,65 +157,77 @@ class SettingsManager:
             print(f"{self.texts['load_settings_failed'].format(e)}")
 
     def save_settings(self):
-        """将当前设置保存到配置文件"""
-        if self.settings_changed:
-            try:
-                # 验证目录历史是否有效
-                valid_history = []
-                for path in self.dir_history:
-                    if path and os.path.exists(path):
-                        valid_history.append(path)
-                    else:
-                        print(f"从历史中移除无效路径: {path}")
-                
-                # 如果历史记录有变化，更新并标记为已更改
-                if len(valid_history) != len(self.dir_history):
-                    self.dir_history = valid_history
-                    self.settings_changed = True
-                
-                # 构建新的合并结构
-                directory_history = []
-                for path in self.dir_history:
-                    entry = {"path": path}
-                    if path in self.expanded_states:
-                        entry["expanded_paths"] = self.expanded_states[path]
-                    directory_history.append(entry)
+        """保存设置，使用原子写入"""
+        if not self.settings_changed:
+            return True
+        
+        try:
+            # 验证并构建设置数据（现有逻辑保持不变）
+            valid_history = [path for path in self.dir_history if path and os.path.exists(path)]
+            if len(valid_history) != len(self.dir_history):
+                self.dir_history = valid_history
 
-                settings = {
-                    "path_prefix": self.PATH_PREFIX,
-                    "path_suffix": self.PATH_SUFFIX,
-                    "code_prefix": self.CODE_PREFIX,
-                    "code_suffix": self.CODE_SUFFIX,
-                    "show_hidden": self.show_hidden_value,
-                    "show_files": self.show_files_value,
-                    "show_folders": self.show_folders_value,
-                    "use_relative_path": self.use_relative_path_value,
-                    "max_depth": self.max_depth_value,
-                    "file_filter": self.file_filter_value,
-                    "language": self.current_language,
-                    "directory_history": directory_history,
-                    "show_advanced_options": self.show_advanced_options_value,
-                    "enable_easy_multiselect": self.enable_easy_multiselect_value,
-                    "use_gitignore": self.use_gitignore_value,
-                    "is_topmost": self.is_topmost_value, 
-                }
+            directory_history = []
+            for path in self.dir_history:
+                entry = {"path": path}
+                if path in self.expanded_states:
+                    entry["expanded_paths"] = self.expanded_states[path]
+                directory_history.append(entry)
 
-                # 确保设置目录存在
-                settings_dir = os.path.dirname(self.settings_file)
-                if not os.path.exists(settings_dir):
-                    os.makedirs(settings_dir)
+            settings = {
+                "path_prefix": self.PATH_PREFIX,
+                "path_suffix": self.PATH_SUFFIX,
+                "code_prefix": self.CODE_PREFIX,
+                "code_suffix": self.CODE_SUFFIX,
+                "show_hidden": self.show_hidden_value,
+                "show_files": self.show_files_value,
+                "show_folders": self.show_folders_value,
+                "use_relative_path": self.use_relative_path_value,
+                "max_depth": self.max_depth_value,
+                "file_filter": self.file_filter_value,
+                "language": self.current_language,
+                "directory_history": directory_history,
+                "show_advanced_options": self.show_advanced_options_value,
+                "enable_easy_multiselect": self.enable_easy_multiselect_value,
+                "use_gitignore": self.use_gitignore_value,
+                "is_topmost": self.is_topmost_value,
+            }
 
-                with open(self.settings_file, "w", encoding="utf-8") as f:
-                    json.dump(settings, f, ensure_ascii=False, indent=2)
+            # 确保目录存在
+            settings_dir = os.path.dirname(self.settings_file)
+            os.makedirs(settings_dir, exist_ok=True)
 
-                self.settings_changed = False
-                print(f"设置已保存到 {self.settings_file}")
-                print(f"目录历史记录数: {len(directory_history)}")
-                return True
-            except Exception as e:
-                print(f"保存设置失败: {str(e)}")
-                return False
-        return True
+            # 原子写入
+            temp_file = str(self.settings_file) + '.tmp'
+        
+            with open(temp_file, 'w', encoding='utf-8') as f:
+                json.dump(settings, f, ensure_ascii=False, indent=2)
+                f.flush()
+                os.fsync(f.fileno())
+        
+            # 原子替换
+            if os.name == 'nt':
+                if os.path.exists(self.settings_file):
+                    os.replace(temp_file, self.settings_file)
+                else:
+                    os.rename(temp_file, self.settings_file)
+            else:
+                os.rename(temp_file, self.settings_file)
+
+            self.settings_changed = False
+            print(f"设置已保存")
+            return True
+
+        except Exception as e:
+            # 清理临时文件
+            temp_file = str(self.settings_file) + '.tmp'
+            if os.path.exists(temp_file):
+                try:
+                    os.remove(temp_file)
+                except:
+                    pass
+            print(f"保存设置失败: {str(e)}")
+            return False
 
     def update_expanded_state(self, directory, expanded_paths):
         """

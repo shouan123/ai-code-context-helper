@@ -12,11 +12,18 @@ from ai_code_context_helper.tooltip import create_tooltip
 from ai_code_context_helper.config import (
     TREE_COLUMN_WIDTH,
     TREE_COLUMN_MIN_WIDTH,
+    TREE_COLUMN_ID,
     CHECK_COLUMN_WIDTH,
     CHECK_COLUMN_MIN_WIDTH,
-    TREE_COLUMN_ID,
     CHECK_COLUMN_ID,
+    LINES_COLUMN_ID,
+    LINES_COLUMN_WIDTH,
+    LINES_COLUMN_MIN_WIDTH,
+    SIZE_COLUMN_ID,
+    SIZE_COLUMN_WIDTH,
+    SIZE_COLUMN_MIN_WIDTH,
 )
+
 
 
 class GUIComponents:
@@ -57,6 +64,7 @@ class GUIComponents:
         初始化应用程序的所有GUI元素，包括状态栏、工具栏、设置面板、
         文件树视图和各种按钮。并设置事件绑定和初始状态。
         """
+
         # 状态栏 - 显示程序状态和操作结果
         self.parent.status_var = tk.StringVar()
         self.parent.status_bar = ttk.Label(
@@ -223,7 +231,8 @@ class GUIComponents:
 
         # 高级选项框架 - 可折叠，包含各种高级设置选项
         self.parent.advanced_options_frame = ttk.Frame(self.parent.control_frame)
-        self.parent.advanced_options_frame.pack(fill=tk.X, pady=5)
+        if self.parent.show_advanced_options:
+            self.parent.advanced_options_frame.pack(fill=tk.X, pady=5)
 
         # 高级选项内容区
         options_frame = ttk.Frame(self.parent.advanced_options_frame)
@@ -438,17 +447,51 @@ class GUIComponents:
 
         # 树形视图控件 - 显示目录结构
         self.parent.tree = ttk.Treeview(
-            self.parent.result_frame, selectmode="extended", show="tree"
+            self.parent.result_frame, selectmode="extended", show="tree headings"
         )
-        self.parent.tree["columns"] = (CHECK_COLUMN_ID,)
+
+        # 设置列
+        self.parent.tree["columns"] = (CHECK_COLUMN_ID, LINES_COLUMN_ID, SIZE_COLUMN_ID)
+
+        # 配置树的主列（文件名列）
         self.parent.tree.column(
             TREE_COLUMN_ID, width=TREE_COLUMN_WIDTH, minwidth=TREE_COLUMN_MIN_WIDTH
         )
+        # 添加主列标题
+        self.parent.tree.heading(
+            TREE_COLUMN_ID, text=self.parent.texts.get("tree_column_name", "Name")
+        )
+        # 配置复选框列
         self.parent.tree.column(
             CHECK_COLUMN_ID,
             width=CHECK_COLUMN_WIDTH,
             minwidth=CHECK_COLUMN_MIN_WIDTH,
-            anchor=tk.CENTER,
+            anchor="center",
+        )
+        self.parent.tree.heading(
+            CHECK_COLUMN_ID, text=self.parent.texts.get("tree_column_select", "Select")
+        )
+
+        # 配置行数列
+        self.parent.tree.column(
+            LINES_COLUMN_ID,
+            width=LINES_COLUMN_WIDTH,
+            minwidth=LINES_COLUMN_MIN_WIDTH,
+            anchor="e",
+        )
+        self.parent.tree.heading(
+            LINES_COLUMN_ID, text=self.parent.texts.get("tree_column_lines", "Lines")
+        )
+
+        # 配置大小列
+        self.parent.tree.column(
+            SIZE_COLUMN_ID,
+            width=SIZE_COLUMN_WIDTH,
+            minwidth=SIZE_COLUMN_MIN_WIDTH,
+            anchor="e",
+        )
+        self.parent.tree.heading(
+            SIZE_COLUMN_ID, text=self.parent.texts.get("tree_column_size", "Size")
         )
 
         # 树形视图滚动条 - 垂直和水平
@@ -609,6 +652,12 @@ class GUIComponents:
 
         # 更新工具提示
         self.update_tooltips()
+        
+        # 更新树标题
+        self.parent.tree.heading(TREE_COLUMN_ID, text=self.parent.texts.get("tree_column_name", "Name"))
+        self.parent.tree.heading(CHECK_COLUMN_ID, text=self.parent.texts.get("tree_column_select", "Select"))
+        self.parent.tree.heading(LINES_COLUMN_ID, text=self.parent.texts.get("tree_column_lines", "Lines"))
+        self.parent.tree.heading(SIZE_COLUMN_ID, text=self.parent.texts.get("tree_column_size", "Size"))
 
     def update_tooltips(self):
         """

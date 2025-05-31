@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ai_code_context_helper"
-version = "1.1.0"
+version = "1.2.0"
 description = "专为AI编程协作设计的代码上下文助手，可视化展示项目结构，支持选择性导出文件路径和代码内容到剪贴板，方便快速向AI助手提供上下文。具备多语言界面、文件过滤、深度控制和自定义格式化输出，让AI更准确理解项目结构并提供针对性代码修改建议。适用于开发者与AI结对编程、代码审查和重构场景。"
 authors = ["sansan"]
 readme = "README.md"
