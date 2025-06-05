@@ -48,6 +48,9 @@ class CodeContextGenerator:
 
     def __init__(self, root):
         self.root = root
+    
+        # 先隐藏窗口，避免在配置过程中显示
+        self.root.withdraw()
 
         self.languages = LANGUAGES
         # 初始化设置管理器
@@ -65,14 +68,10 @@ class CodeContextGenerator:
         self.version = __version__
 
         self.root.title(f"{self.texts['app_title']} v{self.version}")
+    
+        # 设置窗口大小但不设置位置
         self.root.geometry("800x600")
         self.root.minsize(600, 400)
-
-        try:
-            icon_path = Path(__file__).parent / RESOURCES_DIR / ICON_FILENAME
-            self.root.iconbitmap(str(icon_path))
-        except Exception as e:
-            print(f"无法加载图标: {str(e)}")
 
         # 根据初始设置立即应用窗口置顶状态
         if self.is_topmost.get():
@@ -100,6 +99,7 @@ class CodeContextGenerator:
             font=(UI_FONT_FAMILY, UI_HEADING_FONT_SIZE, UI_HEADING_FONT_STYLE),
         )
 
+        # 重新设置窗口大小（如果DEFAULT_WINDOW_SIZE不同的话）
         self.root.geometry(DEFAULT_WINDOW_SIZE)
         self.root.minsize(*DEFAULT_WINDOW_MIN_SIZE)
 
@@ -128,15 +128,25 @@ class CodeContextGenerator:
         )
 
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+    
+        # 先居中窗口，然后显示 - 修改这里
         self.gui.center_window(self.root)
+        self.root.deiconify()  # 显示窗口
 
-        self._initial_loading = True  # 添加一个标志表示正在初始化
-        self._current_loaded_directory = None  # 添加这一行来跟踪当前加载的目录
+        self._initial_loading = True
+        self._current_loaded_directory = None
 
         self._setup_initial_directory()
         self.root.after(100, self._setup_tree_bindings)
 
         self.root.after(100, self._setup_tree_bindings)
+
+        try:
+            icon_path = Path(__file__).parent / RESOURCES_DIR / ICON_FILENAME
+            self.root.iconbitmap(str(icon_path))
+        except Exception as e:
+            print(f"无法加载图标: {str(e)}")
+        
         # 初始化系统托盘图标
         self._create_system_tray()
 
@@ -165,7 +175,6 @@ class CodeContextGenerator:
             print(f"自动保存出错: {str(e)}")
         finally:
             self._schedule_auto_save()
-
 
     def _setup_initial_directory(self):
         """设置初始目录并安排加载"""
@@ -422,6 +431,7 @@ class CodeContextGenerator:
         if directory and Path(directory).is_dir():
             # 更新目录树时强制刷新 .gitignore 缓存
             from ai_code_context_helper.file_utils import clear_gitignore_cache
+
             clear_gitignore_cache()
             # 先保存当前的滚动位置
             try:
@@ -555,13 +565,13 @@ class CodeContextGenerator:
                         pass
 
         collect_expanded_items()
-    
+
         if "." not in expanded_items:
             expanded_items.append(".")
 
         self.settings.expanded_states[current_dir] = expanded_items
         self.settings.settings_changed = True
-    
+
         # 立即保存关键状态
         self.settings.save_settings()
 
@@ -598,8 +608,9 @@ class CodeContextGenerator:
             # 如果是gitignore相关设置变更，强制刷新缓存
             if args and self.settings.settings_changed:
                 from ai_code_context_helper.file_utils import clear_gitignore_cache
+
                 clear_gitignore_cache()
-        
+
             self.tree_ops.generate_tree(preserve_state=True)
 
     def on_dir_changed(self, *args):
